@@ -1,0 +1,36 @@
+{
+    "description": "Turns files into markdown and injects them into AI chats",
+    "manifest_version": 3,
+    "name": "InjectMD",
+    "version": "1.0",
+    "permissions": ["storage"],
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://claude.ai/*",
+                "https://chatgpt.com/*",
+                "https://gemini.google.com/*",
+                "https://chat.deepseek.com/*",
+                "https://www.perplexity.ai/*",
+                "https://copilot.microsoft.com/*",
+                "https://grok.com/*"
+            ],
+            "js": ["converter.js", "content.js"]
+        }
+    ],
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "injectmd@injectmd",
+            "data_collection_permissions": {
+                "required": ["none"]
+            }
+        }
+    },
+
+    "action": {
+        "default_title": "InjectMD",
+        "default_popup": "popup.html"
+    }
+}
