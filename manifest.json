@@ -24,7 +24,7 @@
         "gecko": {
             "id": "injectmd@injectmd",
             "data_collection_permissions": {
-                "required": ["none"]
+                "required": ["storage"]
             }
         }
     },

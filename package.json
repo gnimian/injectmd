@@ -1,0 +1,33 @@
+{
+  "name": "injectmd",
+  "version": "1.0.0",
+  "description": "tool to convert files to markdown or txt and inject them into AI chats",
+  "main": "content.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild converter.js content.js --bundle --outfile=dist/contentBundle.js && esbuild popup.js --bundle --outfile=dist/popupBundle.js"
+  },
+  "keywords": [
+    "markdown",
+    "pdf",
+    "docx",
+    "txt",
+    "ai",
+    "chatgpt",
+    "claude",
+    "gemini",
+    "perplexity",
+    "copilot",
+    "grok"
+  ],
+  "author": "Naiming Zheng",
+  "license": "MIT",
+  "dependencies": {
+    "@opendocsg/pdf2md": "^0.2.7",
+    "mammoth": "^1.12.0",
+    "turndown": "^7.2.4"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.1"
+  }
+}
