@@ -46,26 +46,50 @@ const COPILOT = new AIConfig(
 
 const init = () => {
     const whichAI = window.location.hostname
-    if (whichAI === 'chatgpt.com') {addObserver(CHATGPT)}
-    else if (whichAI === 'claude.ai') {addObserver(CLAUDE)}
-    else if (whichAI === 'gemini.google.com') {addObserver(GEMINI)}
-    else if (whichAI === 'perplexity.ai') {addObserver(PERPLEXITY)}
-    else if (whichAI === 'copilot.microsoft.com') {addObserver(COPILOT)}
-    else if (whichAI === 'grok.com') {addObserver(GROK)}
+    if (whichAI === 'chatgpt.com') {addObserver(CHATGPT);}
+    else if (whichAI === 'claude.ai') {addObserver(CLAUDE);}
+    else if (whichAI === 'gemini.google.com') {addObserver(GEMINI);}
+    else if (whichAI === 'perplexity.ai') {addObserver(PERPLEXITY);}
+    else if (whichAI === 'copilot.microsoft.com') {addObserver(COPILOT);}
+    else if (whichAI === 'grok.com') {addObserver(GROK);}
 }
 
 const addObserver = (site) => {
     const observer = new MutationObserver(() => {
-        const menu = document.querySelector(site.menu)
+        const menu = document.querySelector(site.menu);
+
         if (menu && !menu.querySelector('#injectmd-item')) {
-            const injectItem = document.createElement('div')
-            injectItem.id = 'injectmd-item'
-            injectItem.textContent = 'Inject File'
-            menu.prepend(injectItem)
-            injectItem.addEventListener('click', async () => { })
+            const injectItem = document.createElement('div');
+            injectItem.id = 'injectmd-item';
+            injectItem.textContent = 'Inject File';
+            menu.prepend(injectItem);
+            injectItem.addEventListener('click', async () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.pdf,.docx';
+                input.click();
+                input.addEventListener('change', async () => {
+                    //TODO: could add more files
+                    const file = input.files[0];
+                    const storedMode = await browser.storage.sync.get('mode');
+                    const mode = storedMode.mode;
+                    const convertedFile = await convertFile(file, mode);
+                    const inp = document.querySelector(site.inp);
+                    if (inp.tagName === 'TEXTAREA') {
+                        //value for textarea
+                        inp.value = convertedFile;
+                    }
+                    else {
+                        //Inner text for divs
+                        inp.innerText = convertedFile;
+                    }
+                    inp.dispatchEvent(new Event('input', { bubbles: true }));
+                })
+             })
         }
     })
-    observer.observe(document.body, { childList: true, subtree: true })
+
+    observer.observe(document.body, { childList: true, subtree: true });
 }
 
-init()
+init();
