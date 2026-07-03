@@ -4,7 +4,9 @@ TODO:
 2. Add style for the menu item so it has dark mode and light mode and matches style of the other menu items
 3. MAKE THIS CODE EFFICIENT AND CLEANER!!!
 4. Add error handling, especially in the converter.js file
+5. In package.json remember to add minify 
 */
+import { convertFile } from "./converter.js";
 
 class AIConfig {
     constructor(menu, menuItem, inp) {
@@ -44,6 +46,7 @@ const COPILOT = new AIConfig(
     'textarea[data-testid="composer-input"]'
 )
 
+const whichExtension = typeof browser !== 'undefined' ? browser : chrome;
 const init = () => {
     const whichAI = window.location.hostname
     if (whichAI === 'chatgpt.com') {addObserver(CHATGPT);}
@@ -71,7 +74,7 @@ const addObserver = (site) => {
                 input.addEventListener('change', async () => {
                     //TODO: could add more files
                     const file = input.files[0];
-                    const storedMode = await browser.storage.sync.get('mode');
+                    const storedMode = await whichExtension.storage.sync.get('mode');
                     const mode = storedMode.mode;
                     const convertedFile = await convertFile(file, mode);
                     const inp = document.querySelector(site.inp);

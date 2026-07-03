@@ -1,4 +1,9 @@
 //Uses pdfjs-dist to extract text without formatting
+import pdf2md from  "@opendocsg/pdf2md";
+import mammoth from "mammoth";
+import TurndownService from "turndown";
+import * as pdfjsLib from 'pdfjs-dist';
+
 const PDFtoTXT = async (file) => {
     const buffer = await file.arrayBuffer();
     const loadingTask = pdfjsLib.getDocument({data: buffer});
@@ -68,3 +73,5 @@ const convertFile = async (file, mode) => {
         //REMEMBER TO ADD ERROR HANDLING HERE!!!
     }
 }
+
+export { convertFile };

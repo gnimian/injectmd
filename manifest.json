@@ -15,7 +15,7 @@
                 "https://copilot.microsoft.com/*",
                 "https://grok.com/*"
             ],
-            "js": ["converter.js", "content.js"]
+            "js": ["dist/contentBundle.js"]
         }
     ],
 
