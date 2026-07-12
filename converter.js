@@ -47,31 +47,34 @@ const DOCXtoMD = async(file) => {
 }
 
 const convertFile = async (file, mode) => {
-    if (file.type === "application/pdf") {
-        if (mode === "txt") {
-            return await PDFtoTXT(file);
+    try{
+        if (file.type === "application/pdf") {
+            if (mode === "txt") {
+                return await PDFtoTXT(file);
+            }
+            else if (mode === "md") {
+                return await PDFtoMD(file);
+            }
+            else{
+                //
+                
+            }
         }
-        else if (mode === "md") {
-            return await PDFtoMD(file);
+        else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+            if (mode === "txt") {
+                return await DOCXtoTXT(file);
+            }
+            else if (mode === "md") {
+                return await DOCXtoMD(file);
+            }
+            else{
+                //REMEMBER TO ADD ERROR HANDLING HERE!!!
+            }
         }
-        else{
+        else {
             //REMEMBER TO ADD ERROR HANDLING HERE!!!
         }
-    }
-    else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-        if (mode === "txt") {
-            return await DOCXtoTXT(file);
-        }
-        else if (mode === "md") {
-            return await DOCXtoMD(file);
-        }
-        else{
-            //REMEMBER TO ADD ERROR HANDLING HERE!!!
-        }
-    }
-    else {
-        //REMEMBER TO ADD ERROR HANDLING HERE!!!
-    }
+    }  
 }
 
 export { convertFile };
